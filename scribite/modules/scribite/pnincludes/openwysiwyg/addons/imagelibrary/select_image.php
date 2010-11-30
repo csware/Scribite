@@ -15,7 +15,7 @@ include 'includes/pnAPI.php';
 pnInit();
 /****************************************************************/
 
-if (!pnUserLoggedin() || !SecurityUtil::checkPermission('scribite:openwysiwyg:selectimage', '::', ACCESS_COMMENT)) {
+if (!$allowselectimage || !pnUserLoggedin() || !SecurityUtil::checkPermission('scribite:openwysiwyg:selectimage', '::', ACCESS_COMMENT)) {
     die("permission denied");
 }
 

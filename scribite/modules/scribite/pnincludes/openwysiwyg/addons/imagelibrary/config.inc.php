@@ -26,6 +26,8 @@ $imagebasedir = 'images/openwysiwyg/';
  */
 $imagebaseurl = 'images/openwysiwyg';
 
+$allowselectimage = true;
+
 /*
  * Allow your users to browse the subdir of the defined basedir.
  */

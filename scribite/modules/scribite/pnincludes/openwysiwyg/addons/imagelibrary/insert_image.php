@@ -15,10 +15,6 @@ include 'includes/pnAPI.php';
 pnInit();
 /****************************************************************/
 
-if (!pnUserLoggedin() || !SecurityUtil::checkPermission('scribite:openwysiwyg:selectimage', '::', ACCESS_COMMENT)) {
-    die("permission denied");
-}
-
 require('config.inc.php');
 error_reporting(0);
 // get the identifier of the editor
@@ -43,7 +39,9 @@ if($_GET['dir'] && $browsedirs) {
 
 if((substr($opendir, -1, 1)!='/') && $opendir!='') $opendir = $opendir . '/';
 
-$allowuploads = $allowuploads && SecurityUtil::checkPermission('scribite:openwysiwyg:uploadimage', '::', ACCESS_ADD);
+$allowselectimage = $allowselectimage && pnUserLoggedin() && SecurityUtil::checkPermission('scribite:openwysiwyg:selectimage', '::', ACCESS_COMMENT);
+
+$allowuploads = $allowuploads && pnUserLoggedin() && SecurityUtil::checkPermission('scribite:openwysiwyg:uploadimage', '::', ACCESS_ADD);
 
 // upload file
 if($allowuploads && $_FILES['file']) {
@@ -282,10 +280,12 @@ function selectItemByValue(element, value) {
 </tr>
 </table>
 </td>
+<?php if ( $allowselectimage ) { ?> 
 <td style="vertical-align: top;width: 150px; padding-left: 5px;">
 	<span style="font-family: arial, verdana, helvetica; font-size: 11px; font-weight: bold;">Select Image:</span>
 	<iframe id="chooser" frameborder="0" style="height:165px;width: 180px;border: 2px solid #FFFFFF; padding: 5px;" src="select_image.php?dir=<?php echo urlencode($leadon); ?>"></iframe>
 </td>
+<?php } ?>
 </tr>
 <tr>
 	<td colspan="2" align="right" style="padding-top: 5px;">
